@@ -1,4 +1,4 @@
-import requests, time, tempfile, os
+import requests, time, tempfile, os, sys
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -30,6 +30,9 @@ class MyHTMLParser(HTMLParser):
         elif tag == "/article":
             self.article_content = self.article_content.strip()
 
+def clear():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 def getCSRFToken():
     """
     Retrieves the CSRF token and session cookie by automating Chrome.
@@ -44,7 +47,9 @@ def getCSRFToken():
     opt.add_argument("start-maximized")
 
     DRIVER = webdriver.Chrome(options=opt)
+    clear()
     DRIVER.get("https://stepify.tech/")
+    clear()
     session_cookie = DRIVER.get_cookie("session")["value"]
     csrf_token = DRIVER.execute_script("""
         var element = document.getElementById('csrf_token');
@@ -59,7 +64,23 @@ def sendRequest(csrf_token, session_cookie, yt_url):
     """
     url = "https://stepify.tech/"
     headers = {
-        # ...
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Cache-Control": "max-age=0",
+        "Connection": "keep-alive",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Cookie": f"session={session_cookie}",
+        "Origin": "https://stepify.tech",
+        "Referer": "https://stepify.tech/",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "same-origin",
+        "Sec-Fetch-User": "?1",
+        "Upgrade-Insecure-Requests": "1",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36 Edg/127.0.0.0",
+        "sec-ch-ua": '"Not)A;Brand";v="99", "Microsoft Edge";v="127", "Chromium";v="127"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": '"Windows"'
     }
 
     data = f"csrf_token={csrf_token}&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D{yt_url}"
@@ -120,5 +141,8 @@ def display_with_more(temp_file_path):
         os.remove(temp_file_path)
 
 csrf_token, session_cookie = getCSRFToken()
-yt_url = input("Enter YouTube URL: ").split("=")[1]
+if len(sys.argv) > 1:
+    yt_url = sys.argv[1].split("=")[1]
+else:
+    yt_url = input("Enter YouTube URL: ").split("=")[1]
 sendRequest(csrf_token, session_cookie, yt_url)
