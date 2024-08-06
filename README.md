@@ -16,9 +16,9 @@ Execute the command `pip install selenium requests` to install the required libr
 ## Usage
 ```
 1.) Find a YouTube video you would like to simplify to step-by-step instructions and copy the URL.
-2.) Execute the script by running the command "python StepifyCLI.py"
-3.) Paste the URL into the script when prompted.
-4.) Access the link provided. [future update will have output within the terminal]
+2.) Execute the script by running the command "python StepifyCLI.py [YouTube URL]"
+3.) If a URL is not inputted as an argument, then an option to input the URL will appear.
+4.) The step-by-step tutorial is outputted to the console in a similar manner to the 'more' command.
 ```
 ---
 ## Credits
