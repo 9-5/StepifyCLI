@@ -8,6 +8,7 @@ The following script uses Stepify.tech's API to simplify a YouTube video into a 
 The following are required to be installed:
 - Python
 - Chrome 127.0.6533.89 or higher
+
 The following Python libraries:
 - Selenium
 - Requests
