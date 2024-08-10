@@ -12,6 +12,7 @@ The following are required to be installed:
 The following Python libraries:
 - Selenium
 - Requests
+
 Execute the command `pip install selenium requests` to install the required libraries.
 ---
 ## Usage
