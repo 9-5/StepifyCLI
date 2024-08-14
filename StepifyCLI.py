@@ -85,7 +85,7 @@ def sendRequest(csrf_token, session_cookie, yt_url):
 
     data = f"csrf_token={csrf_token}&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D{yt_url}"
 
-    response = requests.post(url, headers=headers, data=data)
+    response = requests.post(url, headers=headers, data=data, timeout=60)
     while True:
         time.sleep(3)
         if response.status_code == 500:
